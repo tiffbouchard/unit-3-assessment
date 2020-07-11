@@ -10,5 +10,5 @@ def index(request):
         new_widget = form.save(commit=False)
     return render(request, 'index.html', {
         'form': form,
-        
+        'new_widget': new_widget
     })
