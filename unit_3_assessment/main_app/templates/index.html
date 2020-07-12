@@ -11,20 +11,55 @@
       integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
   </head>
   <body>
-  <h1>Wacky Widgets</h1>
-  {% if widgets_list|length == 0 %}
-  <h3>No Widgets Exist</h3>
-  {% else %}
-  
-  {% endif %}
-  <hr />
-  <h4>Add Widget</h4>
-  <form class="pure-form" action="" method="post">
-      {% csrf_token %} 
-      {{ form.as_p }}
+    <h1>Wacky Widgets</h1>
+    {% if widgets|length == 0 %}
+    <h3>No Widgets Exist</h3>
+    {% else %}
+    <table class="pure-table pure-table-striped">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for widget in widgets %}
+        <tr>
+          <td>{{widget.description}}</td>
+          <td>{{widget.quantity}}</td>
+          <td>
+            <form action="{% url 'delete_widget' widget.id %}" method="POST">
+              {% csrf_token %}
+
+              <a href="#" onclick="this.parentNode.submit(); return false;"
+                >X</a
+              >
+            </form>
+          </td>
+        </tr>
+
+        {% endfor %}
+        <tr>
+          <td><b>Total Quantity</b></td>
+          <td><b>{{total}}</b></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    {% endif %}
+    <hr />
+    <h4>Add Widget</h4>
+    <form class="pure-form" action="{% url 'add_widget' %}" method="post">
+      {% csrf_token %} {{ form.as_p }}
       <input type="submit" class="pure-button" value="Add Widget" />
     </form>
   </body>
