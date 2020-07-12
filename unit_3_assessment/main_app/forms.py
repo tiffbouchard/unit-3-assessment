@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Widgets
+from .models import Widget
 
 class WidgetsForm(ModelForm):
     class Meta:
-        model = Widgets
+        model = Widget
         fields = ['description', 'quantity']
